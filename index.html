@@ -428,7 +428,7 @@
       </div>
       <div class="table-container">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-          <h2 style="margin: 0; color:#2c3e50;">📋 Rekap Keterlambatan Pegawai (HT, TL1 - TL4)</h2>
+          <h2 style="margin: 0; color:#2c3e50;">📋 Rekap Keterlambatan Pegawai (KJK, HT, TL1 - TL4)</h2>
           <div id="doc-perform-container"></div>
         </div>
         <div id="div-perform-table"></div>
@@ -481,9 +481,6 @@
         .replace(/'/g, '&#039;');
     };
 
-    // ==============================================
-    // KODE YANG DIUBAH (MENGGUNAKAN FETCH KE APPSSCRIPT URL)
-    // ==============================================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbyGqy8Ta76xOJWWTv7iL5-jufZiBwVjqDc9TqOu-Yt4sNVqqRcI2QuTYwSxyv4fR1dm/exec';
 
     window.onload = function() {
@@ -587,7 +584,7 @@
     const formatNum = (num) => Number.isInteger(num) ? num : Math.round(num * 100) / 100;
 
     // ==============================================
-    // LOGIKA E-PERFORM (BARU) 
+    // LOGIKA E-PERFORM
     // ==============================================
     function populateEperformDropdowns() {
       let dataEperform = rawData.eperform;
@@ -728,7 +725,7 @@
     }
 
     // ==============================================
-    // LOGIKA PERFORM KREATIFITAS PEGAWAI
+    // LOGIKA PERFORM KREATIFITAS PEGAWAI (YANG TELAH DIPERBARUI)
     // ==============================================
     function populatePerformDropdowns() {
       let dataPresensi = rawData.presensi;
@@ -771,6 +768,7 @@
       let idxKet = headers.indexOf('Keterangan');
       let idxNama = headers.indexOf('Nama');
       let idxHT = headers.indexOf('HT');
+      let idxKJK = headers.indexOf('KJK'); // Tambahan variabel KJK
       let idxDoc = headers.indexOf('Link Dokumentasi'); 
 
       let yearlyRows = dataPresensi.slice(1).filter(row => {
@@ -786,26 +784,33 @@
       yearlyRows.forEach(row => {
         let nama = row[idxNama];
         let ht = parseFloat(row[idxHT]) || 0;
-        if (ht > 0 && nama) {
-          if (!agregasiPerform[nama]) agregasiPerform[nama] = { count: 0, totalHT: 0 };
+        let kjk = parseFloat(row[idxKJK]) || 0; // Mengambil nilai KJK
+        
+        // Cek jika terdapat keterlambatan dari HT ataupun KJK
+        if ((ht > 0 || kjk > 0) && nama) {
+          if (!agregasiPerform[nama]) agregasiPerform[nama] = { count: 0, totalHT: 0, totalKJK: 0 };
           agregasiPerform[nama].count += 1;
           agregasiPerform[nama].totalHT += ht; 
+          agregasiPerform[nama].totalKJK += kjk; 
         }
       });
 
+      // Logika Pengurutan Podium (1: Frekuensi Telat, 2: Jumlah HT, 3: Jumlah KJK)
       let sortedPerform = Object.entries(agregasiPerform).sort((a, b) => {
+        if (b[1].count !== a[1].count) return b[1].count - a[1].count; 
         if (b[1].totalHT !== a[1].totalHT) return b[1].totalHT - a[1].totalHT;
-        return b[1].count - a[1].count;
+        return b[1].totalKJK - a[1].totalKJK;
       });
       let top3Perform = sortedPerform.slice(0, 3);
 
+      // Rendering HTML Podium dengan Info Lengkap
       if (top3Perform.length > 0) {
-        let pod2 = top3Perform[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[1][0])}</div><div class="podium-score" style="background:#f57c00; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[1][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[1][1].totalHT)}</span></div><div class="podium-box rank-2-box" style="background: linear-gradient(135deg, #ffcc80, #f57c00);"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
-        let pod1 = top3Perform[0] ? `<div class="podium-step"><div class="crown-badge">🏃‍♂️</div><div class="podium-name">${escapeHTML(top3Perform[0][0])}</div><div class="podium-score" style="background:#c62828; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[0][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[0][1].totalHT)}</span></div><div class="podium-box rank-1-box" style="background: linear-gradient(135deg, #ef5350, #b71c1c); box-shadow: 0 0 30px rgba(183,28,28,0.3);"><div class="podium-number">1</div><div class="mitra-title" style="color:#b71c1c;">PALING SERING</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
-        let pod3 = top3Perform[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[2][0])}</div><div class="podium-score" style="background:#5d4037; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[2][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[2][1].totalHT)}</span></div><div class="podium-box rank-3-box" style="background: linear-gradient(135deg, #bcaaa4, #5d4037);"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod2 = top3Perform[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[1][0])}</div><div class="podium-score" style="background:#f57c00; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[1][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[1][1].totalHT)} | KJK: ${formatNum(top3Perform[1][1].totalKJK)}</span></div><div class="podium-box rank-2-box" style="background: linear-gradient(135deg, #ffcc80, #f57c00);"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod1 = top3Perform[0] ? `<div class="podium-step"><div class="crown-badge">🏃‍♂️</div><div class="podium-name">${escapeHTML(top3Perform[0][0])}</div><div class="podium-score" style="background:#c62828; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[0][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[0][1].totalHT)} | KJK: ${formatNum(top3Perform[0][1].totalKJK)}</span></div><div class="podium-box rank-1-box" style="background: linear-gradient(135deg, #ef5350, #b71c1c); box-shadow: 0 0 30px rgba(183,28,28,0.3);"><div class="podium-number">1</div><div class="mitra-title" style="color:#b71c1c;">PALING SERING</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod3 = top3Perform[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[2][0])}</div><div class="podium-score" style="background:#5d4037; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[2][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[2][1].totalHT)} | KJK: ${formatNum(top3Perform[2][1].totalKJK)}</span></div><div class="podium-box rank-3-box" style="background: linear-gradient(135deg, #bcaaa4, #5d4037);"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
         podiumContainer.innerHTML = `<h2 style="text-align:center; color:#b71c1c; margin-top:20px; margin-bottom:40px; font-size:24px;">⚠️ Top 3 Pegawai Paling Perform (Tahun ${escapeHTML(valTahun)})</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
       } else {
-        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Luar Biasa! 🎉</h3><p>Nihil pegawai yang terindikasi HT di Tahun ${escapeHTML(valTahun)}.</p></div>`;
+        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Luar Biasa! 🎉</h3><p>Nihil pegawai yang terindikasi terlambat/HT/KJK di Tahun ${escapeHTML(valTahun)}.</p></div>`;
       }
 
       if (!valPeriode) {
@@ -838,19 +843,26 @@
         docPerformContainer.innerHTML = '';
       }
 
+      // Pengurutan pada tabel: Prioritas HT > KJK
       filteredRows.sort((a, b) => {
-        let valA = parseFloat(a[idxHT]) || 0;
-        let valB = parseFloat(b[idxHT]) || 0;
-        return valB - valA; 
+        let htA = parseFloat(a[idxHT]) || 0;
+        let htB = parseFloat(b[idxHT]) || 0;
+        if (htB !== htA) return htB - htA;
+        
+        let kjkA = parseFloat(a[idxKJK]) || 0;
+        let kjkB = parseFloat(b[idxKJK]) || 0;
+        return kjkB - kjkA; 
       });
 
-      let targetCols = ['NIP', 'Nama', 'HT', 'TL1', 'TL2', 'TL3', 'TL4'];
+      // Penambahan KJK pada Target Penarikan Kolom Tabel
+      let targetCols = ['NIP', 'Nama', 'KJK', 'HT', 'TL1', 'TL2', 'TL3', 'TL4'];
       let targetIdxs = targetCols.map(col => headers.indexOf(col));
 
       let displayData = filteredRows.map(row => targetIdxs.map(i => i !== -1 ? row[i] : '-'));
       currentExportData['PERFORM'] = { headers: targetCols, data: displayData };
 
       let idxHTLocal = targetCols.indexOf('HT');
+      let idxKJKLocal = targetCols.indexOf('KJK');
       let idxNamaLocal = targetCols.indexOf('Nama');
       let namesHT = [];
 
@@ -861,8 +873,10 @@
       displayData.forEach(row => {
         let trClass = '';
         let valHT = parseFloat(row[idxHTLocal]) || 0;
+        let valKJK = parseFloat(row[idxKJKLocal]) || 0;
         
-        if (valHT > 0) {
+        // Mewarnai baris (merah) bila HT atau KJK tidak nol
+        if (valHT > 0 || valKJK > 0) {
           trClass = ' class="row-danger"';
           namesHT.push(row[idxNamaLocal]);
         }
@@ -877,7 +891,7 @@
         nameListContainer.innerHTML = `<div style="font-size:12px; color:#b71c1c; margin-bottom:5px;"><b>⚠️ Pegawai yang Perform:</b></div>` + 
                                       namesHT.map(n => `<span class="name-badge">${escapeHTML(n)}</span>`).join('');
       } else {
-        nameListContainer.innerHTML = `<div style="font-size:13px; color:#107c41; margin-top:10px;"><b>✅ Luar Biasa! Nihil Keterlambatan HT</b></div>`;
+        nameListContainer.innerHTML = `<div style="font-size:13px; color:#107c41; margin-top:10px;"><b>✅ Luar Biasa! Nihil Keterlambatan</b></div>`;
       }
     }
 
