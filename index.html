@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    /* =========================================
+       CSS TOP HEADER & LOGO
+       ========================================= */
+    .top-header {
+      background: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 50px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .bps-logo {
+      height: 50px;
+    }
+    .header-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .bps-title {
+      font-weight: bold;
+      color: #03a9f4; /* Biru muda */
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      font-style: italic; /* Tulisan miring */
+    }
+    .bps-subtitle {
+      font-weight: bold;
+      color: #03a9f4; /* Biru muda */
+      font-size: 15px;
+      line-height: 1.2;
+      font-style: italic; /* Tulisan miring */
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .extra-logo {
+      height: 40px;
+      object-fit: contain;
+    }
+
+    /* =========================================
+       CSS NAVBAR, DROPDOWN & UMUM
+       ========================================= */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; color: #333; }
+    .navbar {
+      background: white; padding: 0 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+      display: flex; align-items: center; justify-content: center; 
+      position: sticky; top: 0; z-index: 1000; margin-bottom: 20px; flex-wrap: wrap; border-top: 1px solid #f0f0f0; border-bottom: 2px solid #fdf0f4;
+    }
+    .nav-link { 
+      padding: 20px 25px; cursor: pointer; color: #555; font-weight: bold; border-bottom: 3px solid transparent; transition: all 0.3s ease; text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px;
+    }
+    .nav-link:hover { color: #D81B60; }
+    .nav-link.active { color: #D81B60; border-bottom: 3px solid #D81B60; background-color: #fdf0f4; }
+    
+    /* CSS Dropdown Menu */
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content {
+      display: none; position: absolute; background-color: #ffffff;
+      min-width: 240px; box-shadow: 0px 10px 25px 0px rgba(0,0,0,0.1); z-index: 1;
+      border-radius: 12px; overflow: hidden; border: 1px solid #f0f0f0; top: 100%;
+    }
+    .dropdown-content div {
+      color: #555; padding: 14px 20px; text-decoration: none; display: block; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.2s; border-bottom: 1px solid #fafafa; text-transform: uppercase;
+    }
+    .dropdown-content div:last-child { border-bottom: none; }
+    .dropdown-content div:hover { background-color: #fdf0f4; color: #D81B60; padding-left: 25px; border-left: 4px solid #D81B60; }
+    .dropdown:hover .dropdown-content { display: block; }
+    .dropdown-toggle::after { content: ' ▼'; font-size: 10px; opacity: 0.7; }
+
+    /* =========================================
+       CSS HERO SECTION & LANDING PAGES
+       ========================================= */
+    .hero-section {
+      background: linear-gradient(135deg, #D81B60 0%, #880e4f 100%);
+      color: white; padding: 80px 20px; text-align: center; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2); position: relative; overflow: hidden;
+    }
+    .hero-section::before { content: ''; position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .hero-section::after { content: ''; position: absolute; bottom: -80px; right: -20px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+    
+    .hero-title { font-size: 46px; font-weight: 900; margin-bottom: 15px; line-height: 1.2; letter-spacing: 1px; position: relative; z-index: 2; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .hero-subtitle { font-size: 20px; margin-bottom: 25px; opacity: 0.95; line-height: 1.6; font-weight: 500; position: relative; z-index: 2; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .hero-desc { font-size: 16px; opacity: 0.8; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2;}
+    
+    .landing-header { text-align: center; margin-bottom: 40px; padding: 40px 20px; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .landing-header h1 { color: #D81B60; font-size: 32px; font-weight: 900; margin-top: 0; margin-bottom: 15px; }
+    .landing-header p { color: #666; font-size: 16px; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+    
+    .landing-grid { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-bottom: 40px; }
+    .landing-card {
+      background: white; border-radius: 16px; padding: 40px 25px; width: 260px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.3s ease; border-top: 5px solid #D81B60; cursor: pointer; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;
+    }
+    .landing-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2); border-color: #ad1457; }
+    .landing-card-icon { font-size: 55px; margin-bottom: 20px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); transition: transform 0.3s ease; }
+    .landing-card:hover .landing-card-icon { transform: scale(1.1); }
+    .landing-card-title { font-size: 18px; font-weight: 900; color: #2c3e50; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .landing-card-desc { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
+    .landing-card-btn { background: #fdf0f4; color: #D81B60; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 13px; transition: 0.2s; display: inline-block; }
+    .landing-card:hover .landing-card-btn { background: #D81B60; color: white; }
+
+    /* =========================================
+       CSS BTN EXCEL & DOKUMENTASI
+       ========================================= */
+    .btn-excel {
+      background-color: #107c41; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 8px;
+      transition: background-color 0.2s, transform 0.1s; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .btn-excel:hover { background-color: #0c5e31; }
+    .btn-excel:active { transform: scale(0.97); }
+
+    .btn-doc {
+      background-color: #D81B60; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;
+      font-size: 14px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 18px;
+    }
+    .btn-doc:hover { background-color: #ad1457; }
+
+    /* =========================================
+       CSS PST TERBAIK & PODIUM MODERN
+       ========================================= */
+    .pst-card-container { display: flex; justify-content: center; margin: 30px 0 50px 0; }
+    .pst-winner-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fffbf0 100%);
+      border: 2px solid #FFD700; border-radius: 20px; padding: 40px; text-align: center;
+      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2); max-width: 450px; width: 100%; position: relative; overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .pst-winner-card:hover { transform: translateY(-5px); }
+    .pst-icon {
+      font-size: 70px; margin-bottom: 15px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
+      animation: starPulse 2s infinite ease-in-out;
+    }
+    @keyframes starPulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    .pst-title-badge { font-size: 14px; color: #D81B60; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; }
+    .pst-name { font-size: 26px; color: #2c3e50; font-weight: 900; margin-bottom: 20px; line-height: 1.2; }
+    .pst-score {
+      font-size: 16px; color: white; background: #D81B60; padding: 8px 24px; border-radius: 30px; 
+      display: inline-block; font-weight: bold; box-shadow: 0 4px 10px rgba(216, 27, 96, 0.3);
+    }
+    .pst-ribbon {
+      position: absolute; top: 20px; right: -35px; background: #FFD700; color: #333; font-weight: bold;
+      padding: 5px 40px; transform: rotate(45deg); font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .podium-wrapper { display: flex; align-items: flex-end; justify-content: center; gap: 15px; margin: 20px 0 60px 0; height: 380px; }
+    .podium-step { display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 200px; }
+    .crown-badge { font-size: 45px; margin-bottom: 5px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+    .podium-name { font-weight: 800; font-size: 16px; text-align: center; margin-bottom: 10px; color: #2c3e50; padding: 0 5px; word-wrap: break-word; line-height: 1.3; }
+    .podium-score { font-size: 14px; color: white; background: #D81B60; font-weight: bold; margin-bottom: 15px; padding: 6px 16px; border-radius: 20px; box-shadow: 0 4px 10px rgba(216, 27, 96, 0.3); letter-spacing: 0.5px; }
+    .podium-box { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 25px; color: white; font-weight: bold; border-radius: 16px 16px 0 0; box-shadow: 0 15px 35px rgba(0,0,0,0.15); position: relative; overflow: hidden; transition: transform 0.3s ease; }
+    .podium-box:hover { transform: translateY(-5px); }
+    .podium-box::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%); pointer-events: none; }
+    .podium-number { font-size: 65px; text-shadow: 2px 4px 8px rgba(0,0,0,0.2); line-height: 1;}
+    .mitra-title { font-size: 12px; background: rgba(255,255,255,0.95); color: #B8860B; padding: 6px 16px; border-radius: 20px; margin-top: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    
+    .rank-1-box { height: 230px; background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #D4AF37 100%); z-index: 3; box-shadow: 0 0 30px rgba(212,175,55,0.5);}
+    .rank-2-box { height: 160px; background: linear-gradient(135deg, #E0E0E0 0%, #F5F5F5 50%, #9E9E9E 100%); z-index: 2;}
+    .rank-3-box { height: 120px; background: linear-gradient(135deg, #CD7F32 0%, #E2A76F 50%, #8B4513 100%); z-index: 1;}
+
+    /* =========================================
+       CSS TABEL & STATE UMUM
+       ========================================= */
+    .main-padding { padding: 0 30px 30px 30px; max-width: 1400px; margin: 0 auto; }
+    .header-container { background-color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 25px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border-left: 5px solid #D81B60; }
+    h2 { color: #D81B60; margin-top: 0; margin-bottom: 15px; font-weight: 900; letter-spacing: 0.5px; }
+    .header-title { color: #D81B60; margin: 0; margin-right: 20px; font-size: 26px; font-weight: 900; letter-spacing: 0.5px; }
+    select { padding: 10px 15px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; outline: none; min-width: 160px; font-weight: bold; color: #444; background-color: #fdfdfd; cursor: pointer; transition: 0.2s; }
+    select:focus { box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.2); border-color: #D81B60; }
+    .table-container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 25px; }
+    .table-scroll { max-height: 450px; overflow-y: auto; overflow-x: auto; border: 1px solid #f0f0f0; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background-color: #D81B60; color: white; text-align: left; padding: 15px 12px; white-space: nowrap; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-weight: bold; letter-spacing: 0.5px; }
+    td { padding: 12px; border-bottom: 1px solid #f5f5f5; color: #444; }
+    tr:nth-child(even) { background-color: #fafafa; }
+    tr:hover { background-color: #fdf0f4; }
+    .row-danger { background-color: #ffebee !important; color: #c62828 !important; } 
+    .row-champion { background-color: #fffde7 !important; font-weight: bold; border-left: 4px solid #fbc02d;} 
+    .crown-icon { font-size: 18px; margin-left: 8px; color: #fbc02d; }
+    .empty-state { text-align: center; padding: 60px 20px; color: #888; background: #fafafa; border-radius: 12px; border: 1px dashed #ddd; }
+    .empty-icon { font-size: 65px; margin-bottom: 15px; opacity: 0.6; filter: grayscale(100%); }
+    .empty-state h3 { color: #555; margin: 0 0 10px 0; font-size: 20px; }
+    .name-badge {
+      background-color: #ffebee; color: #c62828; padding: 6px 12px; border-radius: 20px; 
+      font-weight: bold; margin: 3px 5px 3px 0; display: inline-block; font-size: 12px; 
+      box-shadow: 0 2px 4px rgba(198, 40, 40, 0.1); border: 1px solid #ffcdd2;
+    }
+
+    /* =========================================
+       CSS FULLSCREEN LOADING OVERLAY
+       ========================================= */
+    #loading-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background-color: rgba(255, 255, 255, 0.95); z-index: 9999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      backdrop-filter: blur(5px);
+    }
+    .spinner {
+      width: 60px; height: 60px; border: 6px solid #fdf0f4; border-top: 6px solid #D81B60;
+      border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .loading-text { color: #D81B60; font-weight: 900; font-size: 20px; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* =========================================
+       CSS FOOTER (COPYRIGHT)
+       ========================================= */
+    .app-footer {
+      text-align: center;
+      padding: 30px 20px 40px 20px;
+      margin-top: 20px;
+      color: #777;
+      font-size: 13px;
+      font-weight: 600;
+      border-top: 1px dashed #ddd;
+    }
+    .app-footer span { color: #D81B60; font-weight: 800; }
+  </style>
+</head>
+<body>
+
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">⏳ Sedang Memuat Data... Mohon Ditunggu ✨</div>
+  </div>
+
+  <div class="top-header">
+    <div class="header-left">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lambang_Badan_Pusat_Statistik_(BPS)_Indonesia.svg" alt="Logo BPS" class="bps-logo">
+      <div class="header-text">
+        <span class="bps-title">Badan Pusat Statistik</span>
+        <span class="bps-subtitle">Kabupaten Lombok Barat</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_BerAKHLAK.svg" alt="BerAKHLAK" class="extra-logo">
+      <img src="https://sensus.bps.go.id/assets/images/logo-se2026.png" onerror="this.style.display='none'" alt="Sensus Ekonomi 2026" class="extra-logo" style="height: 48px;">
+    </div>
+  </div>
+
+  <div class="navbar">
+    <div id="btn-beranda" class="nav-link active" onclick="switchMenu('beranda')">Beranda</div>
+    
+    <div class="dropdown">
+      <div class="nav-link dropdown-toggle" id="nav-reward" onclick="switchMenu('reward')">Reward</div>
+      <div class="dropdown-content">
+        <div onclick="switchMenu('maestro'); event.stopPropagation();">Maestro</div>
+        <div onclick="switchMenu('pst'); event.stopPropagation();">PST Terbaik</div>
+        <div onclick="switchMenu('mitra'); event.stopPropagation();">ARU Mitra Terbaik</div>
+      </div>
+    </div>
+    
+    <div class="dropdown">
+      <div class="nav-link dropdown-toggle" id="nav-punishment" onclick="switchMenu('punishment')">Punishment</div>
+      <div class="dropdown-content">
+        <div onclick="switchMenu('perform'); event.stopPropagation();">Perform Kreatifitas Pegawai</div>
+        <div onclick="switchMenu('eperform'); event.stopPropagation();">E-Perform</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-padding">
+
+    <div id="menu-beranda" style="display:none;">
+      <div class="hero-section">
+        <div class="hero-title">Sistem Reward dan Punishment</div>
+        <div class="hero-subtitle">Badan Pusat Statistik Kabupaten Lombok Barat</div>
+        <div class="hero-desc">Bentuk apresiasi atas dedikasi dan inovasi, serta wujud komitmen pendorong kedisiplinan demi mewujudkan BPS yang berprestasi, berintegritas, dan melayani dengan sepenuh hati.</div>
+      </div>
+      
+      <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: -50px; position: relative; z-index: 10;">
+        <div class="landing-card" onclick="switchMenu('reward')" style="width: 350px;">
+          <div class="landing-card-icon">🌟</div>
+          <div class="landing-card-title">Reward</div>
+          <div class="landing-card-desc">Jelajahi jajaran pegawai dan mitra terbaik kami yang telah mengukir prestasi gemilang.</div>
+          <div class="landing-card-btn">Lihat Daftar Reward &rarr;</div>
+        </div>
+        <div class="landing-card" onclick="switchMenu('punishment')" style="width: 350px; border-top-color: #2c3e50;">
+          <div class="landing-card-icon">⚖️</div>
+          <div class="landing-card-title">Punishment</div>
+          <div class="landing-card-desc">Pantau tingkat kedisiplinan dan evaluasi performa pegawai secara transparan.</div>
+          <div class="landing-card-btn" style="color: #2c3e50; background: #f4f6f9;">Lihat Daftar Punishment &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-reward" style="display:none;">
+      <div class="landing-header">
+        <h1>🌟 Reward</h1>
+        <p>Bentuk apresiasi tertinggi atas kinerja luar biasa, pelayanan prima, dan dedikasi nyata yang diberikan oleh pegawai serta mitra BPS Kabupaten Lombok Barat dalam mendukung penyediaan data statistik yang berkualitas.</p>
+      </div>
+      
+      <h3 style="text-align: center; color: #555; margin-bottom: 25px;">Pilih Kategori Penghargaan:</h3>
+      <div class="landing-grid">
+        <div class="landing-card" onclick="switchMenu('maestro')">
+          <div class="landing-card-icon">👑</div>
+          <div class="landing-card-title">Maestro</div>
+          <div class="landing-card-desc">Penghargaan prestisius bulanan untuk pegawai dengan Nilai Akhir (CKP & Presensi) tertinggi.</div>
+          <div class="landing-card-btn">Buka Maestro &rarr;</div>
+        </div>
+        <div class="landing-card" onclick="switchMenu('pst')">
+          <div class="landing-card-icon">🏅</div>
+          <div class="landing-card-title">PST Terbaik</div>
+          <div class="landing-card-desc">Apresiasi bagi petugas Pelayanan Statistik Terpadu (PST) yang memberikan layanan paling prima.</div>
+          <div class="landing-card-btn">Buka PST Terbaik &rarr;</div>
+        </div>
+        <div class="landing-card" onclick="switchMenu('mitra')">
+          <div class="landing-card-icon">🤝</div>
+          <div class="landing-card-title">Anugerah Rencang Utame (ARU) Mitra Terbaik</div>
+          <div class="landing-card-desc">Pengakuan atas dedikasi dan akurasi tinggi dari para Mitra Statistik andalan kami.</div>
+          <div class="landing-card-btn">Buka ARU Mitra &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-punishment" style="display:none;">
+      <div class="landing-header" style="border-top: 5px solid #2c3e50;">
+        <h1 style="color: #2c3e50;">⚖️ Punishment</h1>
+        <p>Sistem pemantauan kedisiplinan terintegrasi untuk memastikan standar kerja yang profesional dan menjaga integritas setiap pegawai BPS Kabupaten Lombok Barat tetap berada pada level tertinggi.</p>
+      </div>
+      
+      <h3 style="text-align: center; color: #555; margin-bottom: 25px;">Pilih Kategori Pemantauan:</h3>
+      <div class="landing-grid">
+        <div class="landing-card" onclick="switchMenu('perform')" style="border-top-color: #e67e22;">
+          <div class="landing-card-icon">🏃‍♂️</div>
+          <div class="landing-card-title">Perform Kreatifitas Pegawai</div>
+          <div class="landing-card-desc">Monitoring kedisiplinan presensi (HT, TL1-TL4) untuk menjaga ketepatan waktu kerja.</div>
+          <div class="landing-card-btn" style="color: #e67e22; background: #fff3e0;">Buka Data Perform &rarr;</div>
+        </div>
+        <div class="landing-card" onclick="switchMenu('eperform')" style="border-top-color: #c0392b;">
+          <div class="landing-card-icon">📉</div>
+          <div class="landing-card-title">E-Perform</div>
+          <div class="landing-card-desc">Rekapitulasi komprehensif nilai akhir performa, hukuman disiplin, dan penilaian pimpinan.</div>
+          <div class="landing-card-btn" style="color: #c0392b; background: #fbeee6;">Buka E-Perform &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-maestro" style="display:none;">
+      <div class="header-container">
+        <div style="margin-right: 20px; flex-grow: 1;">
+          <div class="header-title" style="margin-right: 0;">👑 MAESTRO</div>
+          <div style="font-size: 13px; color: #777; margin-top: 4px; font-weight: 600; font-style: italic;">Monthly Achievement of Employee’s Statistics Contribution</div>
+          <div style="font-size: 12px; color: #D81B60; margin-top: 6px; font-style: italic;">* Catatan: Evaluasi dan pemberian penghargaan MAESTRO dilakukan pada bulan berikutnya (n+1).</div>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Tahun</label><br>
+          <select id="filterTahun" onchange="applyFilters()"><option value="" selected disabled>Pilih Tahun...</option></select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Periode</label><br>
+          <select id="filterPeriode" onchange="applyFilters()"><option value="" selected disabled>Pilih Periode...</option></select>
+        </div>
+        <div id="doc-maestro-container"></div>
+      </div>
+      <div class="table-container"><h2>🏆 Hasil Maestro (Leaderboard)</h2><div id="div-maestro"></div></div>
+      <div class="table-container"><h2>📋 Rekap Presensi</h2><div id="div-presensi"></div></div>
+      <div class="table-container"><h2>📈 Rekap CKP</h2><div id="div-ckp"></div></div>
+      <div id="maestro-podium-container"></div>
+    </div>
+
+    <div id="menu-mitra" style="display:none;">
+      <div class="header-container">
+        <div class="header-title">🤝 Anugerah Rencang Utame (ARU) Mitra Terbaik</div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Tahun</label><br>
+          <select id="filterMitraTahun" onchange="applyMitraFilters()"><option value="" selected disabled>Pilih Tahun...</option></select>
+        </div>
+        <div id="doc-mitra-container"></div>
+      </div>
+      <div id="mitra-podium-container"></div>
+      <div class="table-container"><h2>📊 Rekapitulasi Nominasi Mitra</h2><div id="div-mitra-table"></div></div>
+    </div>
+
+    <div id="menu-pst" style="display:none;">
+      <div class="header-container">
+        <div class="header-title">🌟 Pelayanan Statistik Terpadu (PST)</div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Tahun</label><br>
+          <select id="filterPstTahun" onchange="applyPstFilters()"><option value="" selected disabled>Pilih Tahun...</option></select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Periode</label><br>
+          <select id="filterPstPeriode" onchange="applyPstFilters()"><option value="" selected disabled>Pilih Periode...</option></select>
+        </div>
+        <div id="doc-pst-container"></div>
+      </div>
+      <div id="pst-winner-container"></div>
+      <div class="table-container"><h2>📋 Rekapitulasi Hasil PST Terbaik</h2><div id="div-pst-table"></div></div>
+      <div id="pst-podium-container"></div>
+    </div>
+
+    <div id="menu-perform" style="display:none;">
+      <div class="header-container" style="border-left-color: #2c3e50;">
+        <div style="margin-right: 20px;">
+          <div class="header-title" style="color:#2c3e50; margin-right: 0;">🏃‍♂️ Perform Kreatifitas Pegawai</div>
+          <div style="font-size: 12px; color: #e67e22; margin-top: 6px; font-style: italic;">* Catatan: Evaluasi dan penetapan status Perform dilaksanakan pada bulan berikutnya (n+1).</div>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Tahun</label><br>
+          <select id="filterPerformTahun" onchange="applyPerformFilters()" style="border-color:#2c3e50;"><option value="" selected disabled>Pilih Tahun...</option></select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Periode</label><br>
+          <select id="filterPerformPeriode" onchange="applyPerformFilters()" style="border-color:#2c3e50;"><option value="" selected disabled>Pilih Periode...</option></select>
+        </div>
+        <div style="border-left: 2px solid #eee; padding-left: 15px; flex: 1; min-width: 250px; max-height: 80px; overflow-y: auto;">
+          <div id="perform-names-list" style="color:#888; font-size: 13px; font-style: italic;">
+            Daftar pegawai akan muncul setelah filter dipilih...
+          </div>
+        </div>
+      </div>
+      <div class="table-container">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+          <h2 style="margin: 0; color:#2c3e50;">📋 Rekap Keterlambatan Pegawai (HT, TL1 - TL4)</h2>
+          <div id="doc-perform-container"></div>
+        </div>
+        <div id="div-perform-table"></div>
+      </div>
+      <div id="perform-podium-container"></div>
+    </div>
+
+    <div id="menu-eperform" style="display:none;">
+      <div class="header-container" style="border-left-color: #c0392b;">
+        <div class="header-title" style="color:#c0392b;">⚖️ E-Perform (Penilaian Hukuman)</div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Tahun</label><br>
+          <select id="filterEperformTahun" onchange="applyEperformFilters()" style="border-color:#c0392b;"><option value="" selected disabled>Pilih Tahun...</option></select>
+        </div>
+        <div>
+          <label style="font-size:13px; color:#777; text-transform: uppercase; font-weight: bold;">Bulan</label><br>
+          <select id="filterEperformBulan" onchange="applyEperformFilters()" style="border-color:#c0392b;"><option value="" selected disabled>Pilih Bulan...</option></select>
+        </div>
+      </div>
+      <div class="table-container">
+        <h2 style="color:#c0392b;">📋 Rekapitulasi E-Perform</h2>
+        <div id="div-eperform-table"></div>
+      </div>
+    </div>
+
+  </div> <div class="app-footer">
+    &copy; <span id="currentYear"></span> Hak Cipta Tim Subbagian Umum - <span>BPS Kabupaten Lombok Barat</span><br>
+    <div style="font-size: 11.5px; font-weight: normal; margin-top: 6px; color: #999;">
+      Dikembangkan untuk mewujudkan BPS yang berprestasi, berintegritas, dan melayani dengan sepenuh hati.
+    </div>
+  </div>
+
+  <script>
+    // Set auto tahun berjalan di footer
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+    let rawData = {};
+    let currentExportData = {}; 
+
+    const excelIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>`;
+
+    // SECURITY UTILITY: XSS Protection (Mencegah Eksekusi Script Berbahaya)
+    const escapeHTML = (str) => {
+      if (str === null || str === undefined) return '';
+      return str.toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
+    // ==============================================
+    // KODE YANG DIUBAH (MENGGUNAKAN FETCH KE APPSSCRIPT URL)
+    // ==============================================
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyGqy8Ta76xOJWWTv7iL5-jufZiBwVjqDc9TqOu-Yt4sNVqqRcI2QuTYwSxyv4fR1dm/exec';
+
+    window.onload = function() {
+      fetch(GAS_URL)
+        .then(response => response.json())
+        .then(data => {
+          processData(data);
+        })
+        .catch(error => {
+          console.error('Error memuat data:', error);
+          document.getElementById('loading-overlay').innerHTML = `
+            <div class="loading-text" style="color:#c62828;">❌ Gagal memuat data dari server. Pastikan API berjalan normal.</div>
+          `;
+        });
+    };
+
+    function processData(data) {
+      rawData = data;
+      // Sembunyikan layar loading setelah data berhasil di-load
+      document.getElementById('loading-overlay').style.display = 'none';
+      
+      populateDropdowns();       
+      populateMitraDropdowns();  
+      populatePstDropdowns();    
+      populatePerformDropdowns();
+      populateEperformDropdowns(); 
+      
+      // Saat pertama kali load, tampilkan menu Beranda
+      switchMenu('beranda');     
+    }
+
+    function switchMenu(menu) {
+      // Menambahkan 'reward' dan 'punishment' ke dalam daftar menu
+      const allMenus = ['beranda', 'reward', 'punishment', 'maestro', 'mitra', 'pst', 'perform', 'eperform'];
+      
+      allMenus.forEach(m => {
+        let el = document.getElementById('menu-' + m);
+        if(el) el.style.display = (menu === m) ? 'block' : 'none';
+      });
+      
+      // Kelola highlight aktif di Navbar Beranda
+      document.getElementById('btn-beranda').className = (menu === 'beranda') ? 'nav-link active' : 'nav-link';
+      
+      // Kelola highlight aktif di Navbar Reward
+      let isReward = ['reward', 'maestro', 'pst', 'mitra'].includes(menu);
+      document.getElementById('nav-reward').className = isReward ? 'nav-link dropdown-toggle active' : 'nav-link dropdown-toggle';
+
+      // Kelola highlight aktif di Navbar Punishment
+      let isPunishment = ['punishment', 'perform', 'eperform'].includes(menu);
+      document.getElementById('nav-punishment').className = isPunishment ? 'nav-link dropdown-toggle active' : 'nav-link dropdown-toggle';
+
+      // Terapkan filter otomatis jika yang dibuka adalah halaman data
+      if(menu === 'maestro') applyFilters();
+      if(menu === 'mitra') applyMitraFilters();
+      if(menu === 'pst') applyPstFilters();
+      if(menu === 'perform') applyPerformFilters();
+      if(menu === 'eperform') applyEperformFilters();
+    }
+
+    function showEmptyState(containerId, message) {
+      let msg = message || "Silakan pilih Tahun dan Periode/Bulan terlebih dahulu.";
+      document.getElementById(containerId).innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Tidak ada data</h3>
+          <p>${escapeHTML(msg)}</p>
+        </div>
+      `;
+    }
+
+    function exportToExcel(type) {
+      let dataset = currentExportData[type];
+      if(!dataset || !dataset.data || dataset.data.length === 0) return;
+
+      let html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+      html += '<head><meta charset="utf-8"></head><body><table border="1">';
+      html += '<tr>' + dataset.headers.map(h => `<th style="background-color:#D81B60; color:white; font-weight:bold;">${escapeHTML(h)}</th>`).join('') + '</tr>';
+      
+      dataset.data.forEach(row => {
+        html += '<tr>' + row.map(c => `<td>${escapeHTML(c)}</td>`).join('') + '</tr>';
+      });
+      html += '</table></body></html>';
+
+      let blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = `Rekap_${type}.xls`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function getExportBtnHtml(type) {
+      return `<div style="display:flex; justify-content:flex-end;">
+                <button class="btn-excel" onclick="exportToExcel('${type}')">${excelIcon} Unduh Excel</button>
+              </div>`;
+    }
+
+    const formatNum = (num) => Number.isInteger(num) ? num : Math.round(num * 100) / 100;
+
+    // ==============================================
+    // LOGIKA E-PERFORM (BARU) 
+    // ==============================================
+    function populateEperformDropdowns() {
+      let dataEperform = rawData.eperform;
+      if(!dataEperform || dataEperform.length <= 1) return;
+      let headers = dataEperform[0];
+      let idxTahun = headers.indexOf('Tahun');
+      let idxBulan = headers.indexOf('Bulan');
+
+      let setTahun = new Set(); 
+      let setBulan = new Set();
+
+      for (let i = 1; i < dataEperform.length; i++) {
+        if(dataEperform[i][idxTahun]) setTahun.add(dataEperform[i][idxTahun]);
+        if(dataEperform[i][idxBulan]) setBulan.add(dataEperform[i][idxBulan]);
+      }
+      
+      let selTahun = document.getElementById('filterEperformTahun');
+      Array.from(setTahun).sort().reverse().forEach(t => selTahun.innerHTML += `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`);
+      
+      let selBulan = document.getElementById('filterEperformBulan');
+      const monthOrder = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      Array.from(setBulan).sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b)).forEach(b => {
+         selBulan.innerHTML += `<option value="${escapeHTML(b)}">${escapeHTML(b)}</option>`;
+      });
+    }
+
+    function applyEperformFilters() {
+      let valTahun = document.getElementById('filterEperformTahun').value;
+      let valBulan = document.getElementById('filterEperformBulan').value;
+      let tableContainer = document.getElementById('div-eperform-table');
+
+      if (!valTahun || !valBulan) {
+        showEmptyState('div-eperform-table', 'Silakan pilih Tahun dan Bulan terlebih dahulu.');
+        return;
+      }
+
+      let dataEperform = rawData.eperform;
+      let headers = dataEperform[0];
+      let idxTahun = headers.indexOf('Tahun');
+      let idxBulan = headers.indexOf('Bulan');
+      let idxNamaRaw = headers.indexOf('Nama'); 
+      let idxRataRaw = headers.indexOf('Nilai rata-rata');
+      let idxTipsRaw = headers.indexOf('Cek Nilai Tips Lobar'); 
+      let idxPimpinanRaw = headers.indexOf('Penilaian Pimpinan');
+
+      let filteredRows = dataEperform.slice(1).filter(row => row[idxTahun] == valTahun && row[idxBulan] == valBulan);
+
+      if (filteredRows.length === 0) {
+        showEmptyState('div-eperform-table', `Tidak ditemukan data untuk Tahun ${valTahun} - Bulan ${valBulan}.`);
+        return;
+      }
+
+      if (idxNamaRaw !== -1) {
+        filteredRows.sort((a, b) => {
+          let nameA = (a[idxNamaRaw] || "").toString().toLowerCase();
+          let nameB = (b[idxNamaRaw] || "").toString().toLowerCase();
+          return nameA.localeCompare(nameB);
+        });
+      }
+
+      let targetCols = [
+        'Niplama', 'Nama', 'Jabatan', 'Nilai rata-rata', 
+        'Nilai Prestasi (KipApp)', 
+        'Penilaian Pimpinan', 'Nilai Tips Lobar', 'Nilai Akhir', 'Keterangan', 'Bulan', 
+        'Tahun'
+      ];
+
+      let displayData = filteredRows.map(row => {
+        let nilaiRata = idxRataRaw !== -1 ? (parseFloat(row[idxRataRaw]) || 0) : 0;
+        let nilaiPrestasi = nilaiRata >= 91 ? 100 : 99;
+        let nilaiPimpinan = idxPimpinanRaw !== -1 ? (parseFloat(row[idxPimpinanRaw]) || 0) : 0;
+        let nilaiTipsLobar = idxTipsRaw !== -1 ? (parseFloat(row[idxTipsRaw]) || 0) : 0;
+        let nilaiAkhir = formatNum(nilaiPrestasi + nilaiPimpinan + nilaiTipsLobar);
+
+        return targetCols.map(col => {
+          if (col === 'Nilai Prestasi (KipApp)') {
+            return nilaiPrestasi;
+          } 
+          else if (col === 'Nilai Tips Lobar') {
+            return nilaiTipsLobar === 0 ? '' : nilaiTipsLobar;
+          }
+          else if (col === 'Nilai Akhir') {
+            return nilaiAkhir;
+          }
+          else {
+            let idx = headers.indexOf(col);
+            return idx !== -1 ? row[idx] : '-';
+          }
+        });
+      });
+
+      currentExportData['EPERFORM'] = { headers: targetCols, data: displayData };
+
+      let idxPenPimpinanLocal = targetCols.indexOf('Penilaian Pimpinan');
+      let idxTipsLobarLocal = targetCols.indexOf('Nilai Tips Lobar');
+      let idxNilaiAkhirLocal = targetCols.indexOf('Nilai Akhir');
+      let idxKeteranganLocal = targetCols.indexOf('Keterangan'); 
+
+      let htmlTabel = getExportBtnHtml('EPERFORM') + '<div class="table-scroll"><table><thead><tr>';
+      targetCols.forEach(h => htmlTabel += `<th>${escapeHTML(h)}</th>`);
+      htmlTabel += '</tr></thead><tbody>';
+      
+      displayData.forEach(row => {
+        htmlTabel += '<tr>';
+        row.forEach((cell, idx) => {
+          let safeCell = escapeHTML(cell);
+          let formattedCell = safeCell;
+          let tdStyle = '';
+          
+          if ((idx === idxPenPimpinanLocal || idx === idxTipsLobarLocal) && cell !== '' && cell !== '-') {
+            let numVal = parseFloat(cell) || 0;
+            if (numVal < 0) {
+              formattedCell = `<span style="color:red; font-weight:bold;">${safeCell}</span>`;
+            } else if (numVal > 0) {
+              formattedCell = `<span style="color:green; font-weight:bold;">${safeCell}</span>`;
+            }
+          }
+
+          if (idx === idxNilaiAkhirLocal) {
+            let numVal = parseFloat(cell) || 0;
+            tdStyle = ' style="font-weight: bold; text-align: center;"';
+            if (numVal < 100) {
+              formattedCell = `<span style="color:#d4a017;">${safeCell}</span>`;
+            }
+          }
+          
+          if (idx === idxKeteranganLocal) {
+            tdStyle = ' style="white-space: normal; word-break: break-word; min-width: 250px;"';
+          }
+          
+          htmlTabel += `<td${tdStyle}>${formattedCell}</td>`;
+        });
+        htmlTabel += '</tr>';
+      });
+      htmlTabel += '</tbody></table></div>';
+      
+      tableContainer.innerHTML = htmlTabel;
+    }
+
+    // ==============================================
+    // LOGIKA PERFORM KREATIFITAS PEGAWAI
+    // ==============================================
+    function populatePerformDropdowns() {
+      let dataPresensi = rawData.presensi;
+      if(!dataPresensi || dataPresensi.length <= 1) return;
+      let idxTahun = dataPresensi[0].indexOf('Tahun');
+      let idxPeriode = dataPresensi[0].indexOf('Periode');
+      let setTahun = new Set(); let setPeriode = new Set();
+
+      for (let i = 1; i < dataPresensi.length; i++) {
+        if(dataPresensi[i][idxTahun]) setTahun.add(dataPresensi[i][idxTahun]);
+        if(dataPresensi[i][idxPeriode]) setPeriode.add(dataPresensi[i][idxPeriode]);
+      }
+      let selTahun = document.getElementById('filterPerformTahun');
+      setTahun.forEach(t => selTahun.innerHTML += `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`);
+      let selPeriode = document.getElementById('filterPerformPeriode');
+      setPeriode.forEach(p => selPeriode.innerHTML += `<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`);
+    }
+
+    function applyPerformFilters() {
+      let valTahun = document.getElementById('filterPerformTahun').value;
+      let valPeriode = document.getElementById('filterPerformPeriode').value;
+
+      let nameListContainer = document.getElementById('perform-names-list');
+      let tableContainer = document.getElementById('div-perform-table');
+      let podiumContainer = document.getElementById('perform-podium-container');
+      let docPerformContainer = document.getElementById('doc-perform-container');
+
+      if (!valTahun) {
+        showEmptyState('div-perform-table', 'Silakan pilih Tahun dan Periode terlebih dahulu.');
+        nameListContainer.innerHTML = `<div style="color:#888; font-size: 13px; font-style: italic;">Daftar pegawai akan muncul setelah filter dipilih...</div>`;
+        podiumContainer.innerHTML = '';
+        docPerformContainer.innerHTML = ''; 
+        return;
+      }
+
+      let dataPresensi = rawData.presensi;
+      let headers = dataPresensi[0];
+      let idxTahun = headers.indexOf('Tahun');
+      let idxPeriode = headers.indexOf('Periode');
+      let idxKet = headers.indexOf('Keterangan');
+      let idxNama = headers.indexOf('Nama');
+      let idxHT = headers.indexOf('HT');
+      let idxDoc = headers.indexOf('Link Dokumentasi'); 
+
+      let yearlyRows = dataPresensi.slice(1).filter(row => {
+        let match = row[idxTahun] == valTahun;
+        let isExcluded = false;
+        if (idxKet !== -1) {
+          if (row[idxKet] === "Kepala BPS Kabupaten/Kota" || row[idxKet] === "Kepala Subbagian Umum") isExcluded = true;
+        }
+        return match && !isExcluded;
+      });
+
+      let agregasiPerform = {};
+      yearlyRows.forEach(row => {
+        let nama = row[idxNama];
+        let ht = parseFloat(row[idxHT]) || 0;
+        if (ht > 0 && nama) {
+          if (!agregasiPerform[nama]) agregasiPerform[nama] = { count: 0, totalHT: 0 };
+          agregasiPerform[nama].count += 1;
+          agregasiPerform[nama].totalHT += ht; 
+        }
+      });
+
+      let sortedPerform = Object.entries(agregasiPerform).sort((a, b) => {
+        if (b[1].totalHT !== a[1].totalHT) return b[1].totalHT - a[1].totalHT;
+        return b[1].count - a[1].count;
+      });
+      let top3Perform = sortedPerform.slice(0, 3);
+
+      if (top3Perform.length > 0) {
+        let pod2 = top3Perform[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[1][0])}</div><div class="podium-score" style="background:#f57c00; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[1][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[1][1].totalHT)}</span></div><div class="podium-box rank-2-box" style="background: linear-gradient(135deg, #ffcc80, #f57c00);"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod1 = top3Perform[0] ? `<div class="podium-step"><div class="crown-badge">🏃‍♂️</div><div class="podium-name">${escapeHTML(top3Perform[0][0])}</div><div class="podium-score" style="background:#c62828; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[0][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[0][1].totalHT)}</span></div><div class="podium-box rank-1-box" style="background: linear-gradient(135deg, #ef5350, #b71c1c); box-shadow: 0 0 30px rgba(183,28,28,0.3);"><div class="podium-number">1</div><div class="mitra-title" style="color:#b71c1c;">PALING SERING</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod3 = top3Perform[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[2][0])}</div><div class="podium-score" style="background:#5d4037; text-align:center; padding:8px 16px; line-height:1.3;">${top3Perform[2][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">Total HT: ${formatNum(top3Perform[2][1].totalHT)}</span></div><div class="podium-box rank-3-box" style="background: linear-gradient(135deg, #bcaaa4, #5d4037);"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        podiumContainer.innerHTML = `<h2 style="text-align:center; color:#b71c1c; margin-top:20px; margin-bottom:40px; font-size:24px;">⚠️ Top 3 Pegawai Paling Perform (Tahun ${escapeHTML(valTahun)})</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
+      } else {
+        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Luar Biasa! 🎉</h3><p>Nihil pegawai yang terindikasi HT di Tahun ${escapeHTML(valTahun)}.</p></div>`;
+      }
+
+      if (!valPeriode) {
+        showEmptyState('div-perform-table', 'Silakan pilih Periode untuk melihat tabel bulanan.');
+        nameListContainer.innerHTML = `<div style="color:#888; font-size: 13px; font-style: italic;">Pilih periode untuk melihat daftar nama.</div>`;
+        docPerformContainer.innerHTML = ''; 
+        return;
+      }
+
+      let filteredRows = dataPresensi.slice(1).filter(row => {
+        return row[idxTahun] == valTahun && row[idxPeriode] == valPeriode;
+      });
+
+      if (filteredRows.length === 0) {
+        showEmptyState('div-perform-table', `Tidak ditemukan data untuk Tahun ${valTahun} - Periode ${valPeriode}.`);
+        nameListContainer.innerHTML = ``;
+        docPerformContainer.innerHTML = ''; 
+        return;
+      }
+
+      if (idxDoc !== -1) {
+        let linkUrl = filteredRows[0][idxDoc] ? filteredRows[0][idxDoc].toString().trim() : '';
+        if (linkUrl && linkUrl !== '' && linkUrl !== '-') {
+          // Hanya HTML injection khusus link dokumentasi
+          docPerformContainer.innerHTML = `<a href="${encodeURI(linkUrl)}" target="_blank" class="btn-doc" style="margin-top: 0;">📂 Lihat Dokumentasi</a>`;
+        } else {
+          docPerformContainer.innerHTML = '';
+        }
+      } else {
+        docPerformContainer.innerHTML = '';
+      }
+
+      filteredRows.sort((a, b) => {
+        let valA = parseFloat(a[idxHT]) || 0;
+        let valB = parseFloat(b[idxHT]) || 0;
+        return valB - valA; 
+      });
+
+      let targetCols = ['NIP', 'Nama', 'HT', 'TL1', 'TL2', 'TL3', 'TL4'];
+      let targetIdxs = targetCols.map(col => headers.indexOf(col));
+
+      let displayData = filteredRows.map(row => targetIdxs.map(i => i !== -1 ? row[i] : '-'));
+      currentExportData['PERFORM'] = { headers: targetCols, data: displayData };
+
+      let idxHTLocal = targetCols.indexOf('HT');
+      let idxNamaLocal = targetCols.indexOf('Nama');
+      let namesHT = [];
+
+      let htmlTabel = getExportBtnHtml('PERFORM') + '<div class="table-scroll"><table><thead><tr>';
+      targetCols.forEach(h => htmlTabel += `<th>${escapeHTML(h)}</th>`);
+      htmlTabel += '</tr></thead><tbody>';
+      
+      displayData.forEach(row => {
+        let trClass = '';
+        let valHT = parseFloat(row[idxHTLocal]) || 0;
+        
+        if (valHT > 0) {
+          trClass = ' class="row-danger"';
+          namesHT.push(row[idxNamaLocal]);
+        }
+        
+        htmlTabel += `<tr${trClass}>` + row.map(cell => `<td>${escapeHTML(cell)}</td>`).join('') + '</tr>';
+      });
+      htmlTabel += '</tbody></table></div>';
+      
+      tableContainer.innerHTML = htmlTabel;
+
+      if (namesHT.length > 0) {
+        nameListContainer.innerHTML = `<div style="font-size:12px; color:#b71c1c; margin-bottom:5px;"><b>⚠️ Pegawai yang Perform:</b></div>` + 
+                                      namesHT.map(n => `<span class="name-badge">${escapeHTML(n)}</span>`).join('');
+      } else {
+        nameListContainer.innerHTML = `<div style="font-size:13px; color:#107c41; margin-top:10px;"><b>✅ Luar Biasa! Nihil Keterlambatan HT</b></div>`;
+      }
+    }
+
+    // ==============================================
+    // LOGIKA PST TERBAIK 
+    // ==============================================
+    function populatePstDropdowns() {
+      let dataPst = rawData.pst;
+      if(!dataPst || dataPst.length <= 1) return;
+      let idxTahun = dataPst[0].indexOf('Tahun'); let idxPeriode = dataPst[0].indexOf('Periode');
+      let setTahun = new Set(); let setPeriode = new Set();
+      for (let i = 1; i < dataPst.length; i++) {
+        if(dataPst[i][idxTahun]) setTahun.add(dataPst[i][idxTahun]);
+        if(dataPst[i][idxPeriode]) setPeriode.add(dataPst[i][idxPeriode]);
+      }
+      let selTahun = document.getElementById('filterPstTahun');
+      setTahun.forEach(t => selTahun.innerHTML += `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`);
+      let selPeriode = document.getElementById('filterPstPeriode');
+      setPeriode.forEach(p => selPeriode.innerHTML += `<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`);
+    }
+
+    function applyPstFilters() {
+      let valTahun = document.getElementById('filterPstTahun').value;
+      let valPeriode = document.getElementById('filterPstPeriode').value;
+      let podiumContainer = document.getElementById('pst-podium-container');
+      let docContainer = document.getElementById('doc-pst-container');
+
+      if (!valTahun) { 
+        showEmptyState('pst-winner-container', 'Silakan pilih Tahun dan Periode PST terlebih dahulu.'); 
+        showEmptyState('div-pst-table', 'Silakan pilih Tahun dan Periode PST terlebih dahulu.'); 
+        podiumContainer.innerHTML = '';
+        docContainer.innerHTML = '';
+        return; 
+      }
+
+      let dataPst = rawData.pst; let headers = dataPst[0];
+      let idxTahun = headers.indexOf('Tahun'); let idxPeriode = headers.indexOf('Periode');
+      let idxNama = headers.indexOf('Nama Pegawai'); let idxTotal = headers.indexOf('Keseluruhan');
+      let idxDoc = headers.indexOf('Link Dokumentasi'); 
+
+      let yearlyRows = dataPst.slice(1).filter(row => row[idxTahun] == valTahun);
+
+      let periodsData = {};
+      yearlyRows.forEach(row => {
+        let per = row[idxPeriode];
+        if (!periodsData[per]) periodsData[per] = [];
+        periodsData[per].push(row);
+      });
+
+      let winCounts = {};
+      Object.keys(periodsData).forEach(per => {
+        let rowsInPeriod = periodsData[per];
+        let maxScore = Math.max(...rowsInPeriod.map(r => parseFloat(r[idxTotal]) || 0));
+
+        rowsInPeriod.forEach(row => {
+          let nama = row[idxNama];
+          let score = parseFloat(row[idxTotal]) || 0;
+          if (nama && score === maxScore && maxScore > 0) {
+            if (!winCounts[nama]) winCounts[nama] = { wins: 0, totalScore: 0 };
+            winCounts[nama].wins += 1;
+            winCounts[nama].totalScore += score;
+          }
+        });
+      });
+
+      let sortedWinners = Object.entries(winCounts).sort((a, b) => {
+        if (b[1].wins !== a[1].wins) return b[1].wins - a[1].wins;
+        return b[1].totalScore - a[1].totalScore;
+      });
+      let top3Pst = sortedWinners.slice(0, 3);
+
+      if (top3Pst.length > 0) {
+        let pod2 = top3Pst[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Pst[1][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Pst[1][1].wins} Kali<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Pst[1][1].totalScore)}</span></div><div class="podium-box rank-2-box"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod1 = top3Pst[0] ? `<div class="podium-step"><div class="crown-badge">🏅</div><div class="podium-name">${escapeHTML(top3Pst[0][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Pst[0][1].wins} Kali<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Pst[0][1].totalScore)}</span></div><div class="podium-box rank-1-box"><div class="podium-number">1</div><div class="mitra-title">PST TERBAIK</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod3 = top3Pst[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Pst[2][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Pst[2][1].wins} Kali<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Pst[2][1].totalScore)}</span></div><div class="podium-box rank-3-box"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        podiumContainer.innerHTML = `<h2 style="text-align:center; color:#D81B60; margin-top:30px; margin-bottom:40px; font-size:24px;">🏅 Top 3 Petugas PST Terbaik (Tahun ${escapeHTML(valTahun)})</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
+      } else {
+        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Tidak ada data podium</h3><p>Belum ditemukan PST Terbaik untuk Tahun ${escapeHTML(valTahun)}.</p></div>`;
+      }
+
+      if (!valPeriode) {
+        showEmptyState('pst-winner-container', 'Silakan pilih Periode untuk melihat pemenang dan rekap bulanan.');
+        showEmptyState('div-pst-table', 'Silakan pilih Periode untuk melihat pemenang dan rekap bulanan.');
+        docContainer.innerHTML = '';
+        return;
+      }
+
+      let filteredRows = yearlyRows.filter(row => row[idxPeriode] == valPeriode);
+      if (filteredRows.length === 0) { 
+        showEmptyState('pst-winner-container', `Tidak ada data PST untuk Tahun ${valTahun} - Periode ${valPeriode}`); 
+        document.getElementById('div-pst-table').innerHTML = ''; 
+        docContainer.innerHTML = '';
+        return; 
+      }
+
+      if(idxDoc !== -1) {
+        let linkUrl = (filteredRows.length > 0 && filteredRows[0][idxDoc]) ? filteredRows[0][idxDoc].toString().trim() : '';
+        if (linkUrl && linkUrl !== '' && linkUrl !== '-') {
+          docContainer.innerHTML = `<a href="${encodeURI(linkUrl)}" target="_blank" class="btn-doc">📂 Lihat Dokumentasi</a>`;
+        } else {
+          docContainer.innerHTML = '';
+        }
+      } else {
+        docContainer.innerHTML = '';
+      }
+
+      currentExportData['PST'] = { headers: headers, data: filteredRows };
+
+      let maxTotal = -1; filteredRows.forEach(row => { let skor = parseFloat(row[idxTotal]) || 0; if(skor > maxTotal) maxTotal = skor; });
+      let winnerName = ""; filteredRows.forEach(row => { if((parseFloat(row[idxTotal]) || 0) === maxTotal) winnerName = row[idxNama]; });
+
+      if (maxTotal >= 0 && winnerName) {
+        document.getElementById('pst-winner-container').innerHTML = `<div class="pst-card-container"><div class="pst-winner-card"><div class="pst-ribbon">🏆 No. 1</div><div class="pst-icon">🏅</div><div class="pst-title-badge">PST TERBAIK</div><div class="pst-name">${escapeHTML(winnerName)}</div><div class="pst-score">Total Skor: ${maxTotal}</div></div></div>`;
+      } else {
+        document.getElementById('pst-winner-container').innerHTML = '';
+      }
+
+      let htmlTabel = getExportBtnHtml('PST') + '<div class="table-scroll"><table><thead><tr>';
+      
+      headers.forEach((h, index) => {
+        if (index === idxDoc) return;
+        htmlTabel += `<th>${escapeHTML(h)}</th>`;
+      });
+      htmlTabel += '</tr></thead><tbody>';
+      
+      filteredRows.forEach(row => {
+        let isWinner = ((parseFloat(row[idxTotal]) || 0) === maxTotal);
+        let trClass = isWinner ? 'class="row-champion"' : '';
+        htmlTabel += `<tr ${trClass}>`;
+        
+        row.forEach((cell, i) => { 
+          if (i === idxDoc) return;
+          let content = escapeHTML(cell); 
+          if (isWinner && i === idxNama) content = `<b>${content}</b> <span class="crown-icon" title="PST Terbaik!">🏅</span>`; 
+          htmlTabel += `<td>${content}</td>`; 
+        });
+        htmlTabel += '</tr>';
+      });
+      htmlTabel += '</tbody></table></div>';
+      document.getElementById('div-pst-table').innerHTML = htmlTabel;
+    }
+
+    // ==============================================
+    // LOGIKA MITRA 
+    // ==============================================
+    function populateMitraDropdowns() {
+      let dataMitra = rawData.nominasiMitra;
+      if(!dataMitra || dataMitra.length <= 1) return;
+      let idxTahun = dataMitra[0].indexOf('Tahun');
+      let setTahun = new Set();
+      for (let i = 1; i < dataMitra.length; i++) { if(dataMitra[i][idxTahun]) setTahun.add(dataMitra[i][idxTahun]); }
+      let selTahun = document.getElementById('filterMitraTahun');
+      setTahun.forEach(t => selTahun.innerHTML += `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`);
+    }
+
+    function applyMitraFilters() {
+      let valTahun = document.getElementById('filterMitraTahun').value;
+      let docContainer = document.getElementById('doc-mitra-container');
+
+      if (!valTahun) { 
+        showEmptyState('mitra-podium-container', 'Silakan pilih Tahun terlebih dahulu.'); 
+        showEmptyState('div-mitra-table', 'Silakan pilih Tahun terlebih dahulu.'); 
+        docContainer.innerHTML = '';
+        return; 
+      }
+        
+      let dataMitra = rawData.nominasiMitra; let headers = dataMitra[0];
+      let idxTahun = headers.indexOf('Tahun'); 
+      let idxNama = headers.indexOf('3 Nominasi Mitra Terbaik'); 
+      let idxTotal = headers.indexOf('TOTAL');
+      let idxDoc = headers.indexOf('Link Dokumentasi'); 
+
+      let filteredRows = dataMitra.slice(1).filter(row => row[idxTahun] == valTahun);
+      if (filteredRows.length === 0) { 
+        showEmptyState('mitra-podium-container', `Tidak ada data Mitra untuk Tahun ${valTahun}`); 
+        document.getElementById('div-mitra-table').innerHTML = ''; 
+        docContainer.innerHTML = '';
+        return; 
+      }
+
+      if(idxDoc !== -1) {
+        let linkUrl = (filteredRows.length > 0 && filteredRows[0][idxDoc]) ? filteredRows[0][idxDoc].toString().trim() : '';
+        if (linkUrl && linkUrl !== '' && linkUrl !== '-') {
+          docContainer.innerHTML = `<a href="${encodeURI(linkUrl)}" target="_blank" class="btn-doc">📂 Lihat Dokumentasi</a>`;
+        } else {
+          docContainer.innerHTML = '';
+        }
+      } else {
+        docContainer.innerHTML = '';
+      }
+
+      currentExportData['MITRA'] = { headers: headers, data: filteredRows };
+
+      let agregasiMitra = {};
+      filteredRows.forEach(row => {
+        let namaMitra = row[idxNama]; let skor = parseFloat(row[idxTotal]) || 0;
+        if(namaMitra) { if(!agregasiMitra[namaMitra]) agregasiMitra[namaMitra] = 0; agregasiMitra[namaMitra] += skor; }
+      });
+
+      let sortedMitra = Object.entries(agregasiMitra).sort((a, b) => b[1] - a[1]); let top3 = sortedMitra.slice(0, 3);
+
+      let pod2 = top3[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3[1][0])}</div><div class="podium-score">${top3[1][1]} Poin</div><div class="podium-box rank-2-box"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+      let pod1 = top3[0] ? `<div class="podium-step"><div class="crown-badge">👑</div><div class="podium-name">${escapeHTML(top3[0][0])}</div><div class="podium-score">${top3[0][1]} Poin</div><div class="podium-box rank-1-box"><div class="podium-number">1</div><div class="mitra-title">MITRA TERBAIK</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+      let pod3 = top3[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3[2][0])}</div><div class="podium-score">${top3[2][1]} Poin</div><div class="podium-box rank-3-box"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+
+      document.getElementById('mitra-podium-container').innerHTML = `<h2 style="text-align:center; color:#D81B60; margin-top:20px; margin-bottom:40px; font-size:26px;">Top 3 Mitra Terbaik ${escapeHTML(valTahun)}</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
+
+      let htmlTabel = getExportBtnHtml('MITRA') + '<div class="table-scroll"><table><thead><tr>';
+      
+      headers.forEach((h, index) => {
+        if (index === idxDoc) return;
+        htmlTabel += `<th>${escapeHTML(h)}</th>`;
+      });
+      htmlTabel += '</tr></thead><tbody>';
+      
+      filteredRows.forEach(row => { 
+        htmlTabel += '<tr>';
+        row.forEach((cell, index) => {
+          if (index === idxDoc) return; 
+          htmlTabel += `<td>${escapeHTML(cell)}</td>`;
+        });
+        htmlTabel += '</tr>'; 
+      });
+      
+      htmlTabel += '</tbody></table></div>';
+      document.getElementById('div-mitra-table').innerHTML = htmlTabel;
+    }
+
+    // ==============================================
+    // LOGIKA MAESTRO 
+    // ==============================================
+    function populateDropdowns() {
+      let headers = rawData.maestro[0]; let idxTahun = headers.indexOf('Tahun'); let idxPeriode = headers.indexOf('Periode');
+      let setTahun = new Set(); let setPeriode = new Set();
+      for (let i = 1; i < rawData.maestro.length; i++) {
+        if(rawData.maestro[i][idxTahun]) setTahun.add(rawData.maestro[i][idxTahun]);
+        if(rawData.maestro[i][idxPeriode]) setPeriode.add(rawData.maestro[i][idxPeriode]);
+      }
+      let selTahun = document.getElementById('filterTahun'); selTahun.innerHTML = '<option value="" selected disabled>Pilih Tahun...</option>'; setTahun.forEach(t => selTahun.innerHTML += `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`);
+      let selPeriode = document.getElementById('filterPeriode'); selPeriode.innerHTML = '<option value="" selected disabled>Pilih Periode...</option>'; setPeriode.forEach(p => selPeriode.innerHTML += `<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`);
+    }
+
+    function applyFilters() {
+      let valTahun = document.getElementById('filterTahun').value; 
+      let valPeriode = document.getElementById('filterPeriode').value;
+      let podiumContainer = document.getElementById('maestro-podium-container');
+      let docContainer = document.getElementById('doc-maestro-container');
+
+      if (!valTahun) { 
+        showEmptyState('div-maestro'); showEmptyState('div-presensi'); showEmptyState('div-ckp'); 
+        podiumContainer.innerHTML = '';
+        docContainer.innerHTML = '';
+        return; 
+      }
+
+      let headers = rawData.maestro[0];
+      let idxTahun = headers.indexOf('Tahun');
+      let idxPeriode = headers.indexOf('Periode');
+      let idxNama = headers.indexOf('Nama');
+      let idxNilaiAkhir = headers.indexOf('Nilai Akhir');
+      let idxDoc = headers.indexOf('Link Dokumentasi'); 
+
+      let yearlyRows = rawData.maestro.slice(1).filter(row => row[idxTahun] == valTahun);
+        
+      let periodsData = {};
+      yearlyRows.forEach(row => {
+        let per = row[idxPeriode];
+        if (!periodsData[per]) periodsData[per] = [];
+        periodsData[per].push(row);
+      });
+
+      let winCounts = {};
+      Object.keys(periodsData).forEach(per => {
+        let rowsInPeriod = periodsData[per];
+        let maxScore = Math.max(...rowsInPeriod.map(r => parseFloat(r[idxNilaiAkhir]) || 0));
+          
+        rowsInPeriod.forEach(row => {
+          let nama = row[idxNama];
+          let score = parseFloat(row[idxNilaiAkhir]) || 0;
+          if (nama && score === maxScore && maxScore > 0) {
+            if (!winCounts[nama]) winCounts[nama] = { wins: 0, totalScore: 0 };
+            winCounts[nama].wins += 1;
+            winCounts[nama].totalScore += score; 
+          }
+        });
+      });
+
+      let sortedWinners = Object.entries(winCounts).sort((a, b) => {
+        if (b[1].wins !== a[1].wins) return b[1].wins - a[1].wins;
+        return b[1].totalScore - a[1].totalScore;
+      });
+      let top3Maestro = sortedWinners.slice(0, 3);
+
+      if (top3Maestro.length > 0) {
+        let pod2 = top3Maestro[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Maestro[1][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Maestro[1][1].wins} Bulan MAESTRO<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Maestro[1][1].totalScore)}</span></div><div class="podium-box rank-2-box"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod1 = top3Maestro[0] ? `<div class="podium-step"><div class="crown-badge">👑</div><div class="podium-name">${escapeHTML(top3Maestro[0][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Maestro[0][1].wins} Bulan MAESTRO<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Maestro[0][1].totalScore)}</span></div><div class="podium-box rank-1-box"><div class="podium-number">1</div><div class="mitra-title">GRAND MAESTRO</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod3 = top3Maestro[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Maestro[2][0])}</div><div class="podium-score" style="text-align:center; padding:8px 16px; line-height:1.3;">${top3Maestro[2][1].wins} Bulan MAESTRO<br><span style="font-size:11px; font-weight:normal;">Total Skor: ${formatNum(top3Maestro[2][1].totalScore)}</span></div><div class="podium-box rank-3-box"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        podiumContainer.innerHTML = `<h2 style="text-align:center; color:#D81B60; margin-top:30px; margin-bottom:40px; font-size:24px;">🏆 Top 3 Pegawai Paling Sering MAESTRO (Tahun ${escapeHTML(valTahun)})</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
+      } else {
+        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Tidak ada data podium</h3><p>Belum ditemukan peraih MAESTRO untuk Tahun ${escapeHTML(valTahun)}.</p></div>`;
+      }
+
+      if (!valPeriode) { 
+        showEmptyState('div-maestro', 'Silakan pilih Periode untuk melihat tabel bulanan.'); 
+        showEmptyState('div-presensi', 'Silakan pilih Periode untuk melihat tabel bulanan.'); 
+        showEmptyState('div-ckp', 'Silakan pilih Periode untuk melihat tabel bulanan.'); 
+        docContainer.innerHTML = '';
+        return; 
+      }
+        
+      if(idxDoc !== -1) {
+        let matchedRows = yearlyRows.filter(row => row[idxPeriode] == valPeriode);
+        let linkUrl = (matchedRows.length > 0 && matchedRows[0][idxDoc]) ? matchedRows[0][idxDoc].toString().trim() : '';
+        
+        if (linkUrl && linkUrl !== '' && linkUrl !== '-') {
+          docContainer.innerHTML = `<a href="${encodeURI(linkUrl)}" target="_blank" class="btn-doc">📂 Lihat Dokumentasi</a>`;
+        } else {
+          docContainer.innerHTML = '';
+        }
+      } else {
+        docContainer.innerHTML = '';
+      }
+
+      renderTable(rawData.maestro, 'div-maestro', valTahun, valPeriode, 'MAESTRO');
+      renderTable(rawData.presensi, 'div-presensi', valTahun, valPeriode, 'PRESENSI');
+      renderTable(rawData.ckp, 'div-ckp', valTahun, valPeriode, 'CKP');
+    }
+
+    function renderTable(sheetData, containerId, filterTahun, filterPeriode, type) {
+      if (!sheetData || sheetData.length <= 1) { showEmptyState(containerId, "Data pada sistem belum tersedia."); return; }
+      let headers = sheetData[0];
+      let idxTahun = headers.indexOf('Tahun'); let idxPeriode = headers.indexOf('Periode'); let idxNama = headers.indexOf('Nama');
+      let idxKJK = headers.indexOf('KJK'); let idxNilaiAkhir = headers.indexOf('Nilai Akhir'); let idxKeterangan = headers.indexOf('Keterangan'); let idxJabatan = headers.indexOf('Jabatan');
+      let idxDoc = headers.indexOf('Link Dokumentasi'); 
+
+      let filteredData = sheetData.slice(1).filter(row => {
+        let matchTahun = (row[idxTahun] == filterTahun); let matchPeriode = (row[idxPeriode] == filterPeriode);
+        let isExcluded = false;
+        if (type === 'PRESENSI' && idxKeterangan !== -1) { if (row[idxKeterangan] === "Kepala BPS Kabupaten/Kota" || row[idxKeterangan] === "Kepala Subbagian Umum") isExcluded = true; }
+        if (type === 'CKP' && idxJabatan !== -1) { if (row[idxJabatan] === "Kepala BPS Kabupaten/Kota" || row[idxJabatan] === "Kepala Subbagian Umum") isExcluded = true; }
+        return matchTahun && matchPeriode && !isExcluded;
+      });
+
+      if(filteredData.length === 0) { showEmptyState(containerId, `Tidak ditemukan data untuk Tahun ${filterTahun} - Periode ${filterPeriode}.`); return; }
+      if ((type === 'PRESENSI' || type === 'CKP') && idxNama !== -1) { filteredData.sort((a, b) => { return (a[idxNama] || "").toString().toLowerCase().localeCompare((b[idxNama] || "").toString().toLowerCase()); }); }
+
+      currentExportData[type] = { headers: headers, data: filteredData };
+
+      let maxNilai = -1; if (type === 'MAESTRO' && idxNilaiAkhir !== -1) { maxNilai = Math.max(...filteredData.map(r => parseFloat(r[idxNilaiAkhir]) || 0)); }
+
+      let html = getExportBtnHtml(type) + '<div class="table-scroll"><table><thead><tr>';
+      
+      headers.forEach((h, index) => {
+        if((type === 'MAESTRO' || type === 'PRESENSI') && index === idxDoc) return; 
+        html += `<th>${escapeHTML(h)}</th>`;
+      }); 
+      html += '</tr></thead><tbody>';
+      
+      filteredData.forEach(row => {
+        let trClass = ''; let isChampion = false;
+        if (type === 'PRESENSI' && idxKJK !== -1) { if ((parseFloat(row[idxKJK]) || 0) > 0) trClass = 'row-danger'; }
+        if (type === 'MAESTRO' && idxNilaiAkhir !== -1) { if ((parseFloat(row[idxNilaiAkhir]) || 0) === maxNilai && maxNilai > 0) { trClass = 'row-champion'; isChampion = true; } }
+
+        html += `<tr class="${trClass}">`;
+        row.forEach((cell, idx) => {
+          if((type === 'MAESTRO' || type === 'PRESENSI') && idx === idxDoc) return; 
+          
+          let safeCell = escapeHTML(cell);
+          let cellContent = safeCell; 
+          let headerName = headers[idx] ? headers[idx].toLowerCase() : '';
+          
+          if (isChampion && headerName.includes('nama')) { cellContent = `<b>${safeCell}</b> <span class="crown-icon" title="Peraih Predikat Maestro!">👑 MAESTRO</span>`; }
+          
+          html += `<td>${cellContent}</td>`;
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      document.getElementById(containerId).innerHTML = html;
+    }
+  </script>
+</body>
+</html>
