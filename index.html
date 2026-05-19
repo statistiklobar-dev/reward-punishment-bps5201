@@ -434,7 +434,7 @@
       </div>
       <div class="table-container">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-          <h2 style="margin: 0; color:#2c3e50;">📋 Rekap Keterlambatan Pegawai (KJK, HT, TL1 - TL4)</h2>
+          <h2 style="margin: 0; color:#2c3e50;">📋 Rekap Keterlambatan Pegawai (KJK HT, HT, TL1 - TL4)</h2>
           <div id="doc-perform-container"></div>
         </div>
         <div id="div-perform-table"></div>
@@ -774,7 +774,8 @@
       let idxKet = headers.indexOf('Keterangan');
       let idxNama = headers.indexOf('Nama');
       let idxHT = headers.indexOf('HT');
-      let idxKJK = headers.indexOf('KJK'); // Tambahan variabel KJK
+      // Perubahan: Mengambil dari kolom "KJK HT"
+      let idxKJK = headers.indexOf('KJK HT'); 
       let idxDoc = headers.indexOf('Link Dokumentasi'); 
 
       let yearlyRows = dataPresensi.slice(1).filter(row => {
@@ -790,9 +791,9 @@
       yearlyRows.forEach(row => {
         let nama = row[idxNama];
         let ht = parseFloat(row[idxHT]) || 0;
-        let kjk = parseFloat(row[idxKJK]) || 0; // Mengambil nilai KJK
+        let kjk = parseFloat(row[idxKJK]) || 0; 
         
-        // Cek jika terdapat keterlambatan dari HT ataupun KJK
+        // Cek jika terdapat keterlambatan dari HT ataupun KJK HT
         if ((ht > 0 || kjk > 0) && nama) {
           if (!agregasiPerform[nama]) agregasiPerform[nama] = { count: 0, totalHT: 0, totalKJK: 0 };
           agregasiPerform[nama].count += 1;
@@ -801,7 +802,7 @@
         }
       });
 
-      // Logika Pengurutan Podium (1: Frekuensi Telat, 2: Jumlah HT, 3: Jumlah KJK)
+      // Logika Pengurutan Podium (1: Frekuensi Telat, 2: Jumlah HT, 3: Jumlah KJK HT)
       let sortedPerform = Object.entries(agregasiPerform).sort((a, b) => {
         if (b[1].count !== a[1].count) return b[1].count - a[1].count; 
         if (b[1].totalHT !== a[1].totalHT) return b[1].totalHT - a[1].totalHT;
@@ -811,12 +812,12 @@
 
       // Rendering HTML Podium dengan Info Lengkap
       if (top3Perform.length > 0) {
-        let pod2 = top3Perform[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[1][0])}</div><div class="podium-score" style="background:#f57c00; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[1][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[1][1].totalHT)} | KJK: ${formatNum(top3Perform[1][1].totalKJK)}</span></div><div class="podium-box rank-2-box" style="background: linear-gradient(135deg, #ffcc80, #f57c00);"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
-        let pod1 = top3Perform[0] ? `<div class="podium-step"><div class="crown-badge">🏃‍♂️</div><div class="podium-name">${escapeHTML(top3Perform[0][0])}</div><div class="podium-score" style="background:#c62828; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[0][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[0][1].totalHT)} | KJK: ${formatNum(top3Perform[0][1].totalKJK)}</span></div><div class="podium-box rank-1-box" style="background: linear-gradient(135deg, #ef5350, #b71c1c); box-shadow: 0 0 30px rgba(183,28,28,0.3);"><div class="podium-number">1</div><div class="mitra-title" style="color:#b71c1c;">PALING SERING</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
-        let pod3 = top3Perform[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[2][0])}</div><div class="podium-score" style="background:#5d4037; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[2][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[2][1].totalHT)} | KJK: ${formatNum(top3Perform[2][1].totalKJK)}</span></div><div class="podium-box rank-3-box" style="background: linear-gradient(135deg, #bcaaa4, #5d4037);"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod2 = top3Perform[1] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[1][0])}</div><div class="podium-score" style="background:#f57c00; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[1][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[1][1].totalHT)} | KJK HT: ${formatNum(top3Perform[1][1].totalKJK)}</span></div><div class="podium-box rank-2-box" style="background: linear-gradient(135deg, #ffcc80, #f57c00);"><div class="podium-number">2</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod1 = top3Perform[0] ? `<div class="podium-step"><div class="crown-badge">🏃‍♂️</div><div class="podium-name">${escapeHTML(top3Perform[0][0])}</div><div class="podium-score" style="background:#c62828; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[0][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[0][1].totalHT)} | KJK HT: ${formatNum(top3Perform[0][1].totalKJK)}</span></div><div class="podium-box rank-1-box" style="background: linear-gradient(135deg, #ef5350, #b71c1c); box-shadow: 0 0 30px rgba(183,28,28,0.3);"><div class="podium-number">1</div><div class="mitra-title" style="color:#b71c1c;">PALING SERING</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
+        let pod3 = top3Perform[2] ? `<div class="podium-step"><div class="podium-name">${escapeHTML(top3Perform[2][0])}</div><div class="podium-score" style="background:#5d4037; text-align:center; padding:8px 16px; line-height:1.4;">${top3Perform[2][1].count} Kali<br><span style="font-size:11px; font-weight:normal;">HT: ${formatNum(top3Perform[2][1].totalHT)} | KJK HT: ${formatNum(top3Perform[2][1].totalKJK)}</span></div><div class="podium-box rank-3-box" style="background: linear-gradient(135deg, #bcaaa4, #5d4037);"><div class="podium-number">3</div></div></div>` : '<div class="podium-step" style="width:30%;"></div>';
         podiumContainer.innerHTML = `<h2 style="text-align:center; color:#b71c1c; margin-top:20px; margin-bottom:40px; font-size:24px;">⚠️ Top 3 Pegawai Paling Perform (Tahun ${escapeHTML(valTahun)})</h2><div class="podium-wrapper">${pod2}${pod1}${pod3}</div>`;
       } else {
-        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Luar Biasa! 🎉</h3><p>Nihil pegawai yang terindikasi terlambat/HT/KJK di Tahun ${escapeHTML(valTahun)}.</p></div>`;
+        podiumContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><h3>Luar Biasa! 🎉</h3><p>Nihil pegawai yang terindikasi terlambat/HT/KJK HT di Tahun ${escapeHTML(valTahun)}.</p></div>`;
       }
 
       if (!valPeriode) {
@@ -849,7 +850,7 @@
         docPerformContainer.innerHTML = '';
       }
 
-      // Pengurutan pada tabel: Prioritas HT > KJK
+      // Pengurutan pada tabel: Prioritas HT > KJK HT
       filteredRows.sort((a, b) => {
         let htA = parseFloat(a[idxHT]) || 0;
         let htB = parseFloat(b[idxHT]) || 0;
@@ -860,15 +861,15 @@
         return kjkB - kjkA; 
       });
 
-      // Penambahan KJK pada Target Penarikan Kolom Tabel
-      let targetCols = ['NIP', 'Nama', 'KJK', 'HT', 'TL1', 'TL2', 'TL3', 'TL4'];
+      // Penambahan KJK HT pada Target Penarikan Kolom Tabel
+      let targetCols = ['NIP', 'Nama', 'KJK HT', 'HT', 'TL1', 'TL2', 'TL3', 'TL4'];
       let targetIdxs = targetCols.map(col => headers.indexOf(col));
 
       let displayData = filteredRows.map(row => targetIdxs.map(i => i !== -1 ? row[i] : '-'));
       currentExportData['PERFORM'] = { headers: targetCols, data: displayData };
 
       let idxHTLocal = targetCols.indexOf('HT');
-      let idxKJKLocal = targetCols.indexOf('KJK');
+      let idxKJKLocal = targetCols.indexOf('KJK HT');
       let idxNamaLocal = targetCols.indexOf('Nama');
       let namesHT = [];
 
@@ -881,8 +882,8 @@
         let valHT = parseFloat(row[idxHTLocal]) || 0;
         let valKJK = parseFloat(row[idxKJKLocal]) || 0;
         
-        // Mewarnai baris (merah) bila HT atau KJK tidak nol
-        if (valHT > 0 || valKJK > 0) {
+        // Perubahan: Mewarnai baris (merah) dan memasukkan list HANYA bila HT > 0
+        if (valHT > 0) {
           trClass = ' class="row-danger"';
           namesHT.push(row[idxNamaLocal]);
         }
